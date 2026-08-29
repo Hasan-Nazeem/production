@@ -7,7 +7,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
-                    url: 'YOUR-NEW-PRODUCTION-REPO-URL'
+                    url: https://github.com/Hasan-Nazeem/production.git
             }
         }
 
