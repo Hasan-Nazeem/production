@@ -6,18 +6,24 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/Hasan-Nazeem/production.git'
+                dir('/home/ubuntu/production') {
+                    sh '''
+                        git fetch origin
+                        git reset --hard origin/main
+                    '''
+                }
             }
         }
 
         stage('Deploy Application') {
             steps {
-                sh '''
-                    docker compose down
-                    docker compose up -d --build --force-recreate
-                    docker image prune -f
-                '''
+                dir('/home/ubuntu/production') {
+                    sh '''
+                        docker compose down
+                        docker compose up -d --build --force-recreate
+                        docker image prune -f
+                    '''
+                }
             }
         }
     }
