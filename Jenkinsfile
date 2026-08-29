@@ -6,25 +6,27 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                dir('/home/ubuntu/production') {
-                    sh '''
-                        git fetch origin
-                        git reset --hard origin/main
-                    '''
-                }
+                sh '''
+                    cd /home/ubuntu/production
+                    git fetch origin
+                    git reset --hard origin/main
+                '''
             }
         }
 
         stage('Deploy Application') {
             steps {
-                dir('/home/ubuntu/production') {
-                    sh '''
-                        docker compose down
-                        docker compose up -d --build --force-recreate
-                        docker image prune -f
-                    '''
-                }
+                sh '''
+                    cd /home/ubuntu/production
+
+                    docker compose down
+
+                    docker compose up -d --build --force-recreate
+
+                    docker image prune -f
+                '''
             }
         }
     }
 }
+
