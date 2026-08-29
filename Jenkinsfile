@@ -6,18 +6,17 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git branch: 'master',
-                url: 'https://github.com/Hasan-Nazeem/ecommerce-app.git'
+                git branch: 'main',
+                    url: 'YOUR-NEW-PRODUCTION-REPO-URL'
             }
         }
-
 
         stage('Deploy Application') {
             steps {
                 sh '''
-                docker compose down
-				docker compose up -d --build --force-recreate
-				docker image prune -f
+                    docker compose down
+                    docker compose up -d --build --force-recreate
+                    docker image prune -f
                 '''
             }
         }
