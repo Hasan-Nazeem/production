@@ -1,12 +1,12 @@
 services:
   client:
-    build: client
+    image: 239155901548.dkr.ecr.ap-south-1.amazonaws.com/frontend:${IMAGE_TAG}
     container_name: client
     networks:
       - app-network
 
   server:
-    build: server
+    image: 239155901548.dkr.ecr.ap-south-1.amazonaws.com/backend:${IMAGE_TAG}
     container_name: server
     env_file:
       - .env
@@ -14,7 +14,7 @@ services:
         'sh',
         '-c',
         'npm run seed:db admin@example.com admin123 && npm start'
-     ] # Default email and password arguments to database seed script - update your admin email and password
+      ]
     depends_on:
       - mongo
     networks:
