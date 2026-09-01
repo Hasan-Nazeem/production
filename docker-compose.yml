@@ -2,11 +2,13 @@ services:
   client:
     image: 239155901548.dkr.ecr.ap-south-1.amazonaws.com/frontend:${IMAGE_TAG}
     container_name: client
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+   healthcheck:
+  test:
+    - CMD
+    - wget
+    - --spider
+    - -q
+    - http://localhost:8080
     networks:
       - app-network
 
@@ -21,10 +23,10 @@ services:
       'npm run seed:db admin@example.com admin123 && npm start'
     ]
    healthcheck:
-        test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000',r=>process.exit(r.statusCode < 500 ? 0 : 1)).on('error',()=>process.exit(1))"]
-        interval: 10s
-        timeout: 5s
-        retries: 5
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000',r=>process.exit(r.statusCode < 500 ? 0 : 1)).on('error',()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     depends_on:
       - mongo
     networks:
