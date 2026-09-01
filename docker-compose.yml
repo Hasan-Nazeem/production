@@ -2,6 +2,11 @@ services:
   client:
     image: 239155901548.dkr.ecr.ap-south-1.amazonaws.com/frontend:${IMAGE_TAG}
     container_name: client
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - app-network
 
@@ -11,10 +16,15 @@ services:
     env_file:
       - .env
     command: [
-        'sh',
-        '-c',
-        'npm run seed:db admin@example.com admin123 && npm start'
-      ]
+      'sh',
+      '-c',
+      'npm run seed:db admin@example.com admin123 && npm start'
+    ]
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     depends_on:
       - mongo
     networks:
@@ -24,6 +34,11 @@ services:
     image: mongo:7
     container_name: mongodb
     command: mongod --quiet --logpath /dev/null
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - app-network
 
