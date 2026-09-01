@@ -2,13 +2,13 @@ services:
   client:
     image: 239155901548.dkr.ecr.ap-south-1.amazonaws.com/frontend:${IMAGE_TAG}
     container_name: client
-   healthcheck:
+  healthcheck:
   test:
     - CMD
     - wget
     - --spider
     - -q
-    - http://localhost:8080
+    - http://localhost:80
     networks:
       - app-network
 
