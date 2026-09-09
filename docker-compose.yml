@@ -1,17 +1,17 @@
 services:
   client:
-  image: 239155901548.dkr.ecr.ap-south-1.amazonaws.com/frontend:${IMAGE_TAG}
+    image: 239155901548.dkr.ecr.ap-south-1.amazonaws.com/frontend:${IMAGE_TAG}
 
-  container_name: client
+    container_name: client
 
-  healthcheck:
-    test: ["CMD", "wget", "-qO-", "http://localhost:8080"]
-    interval: 10s
-    timeout: 5s
-    retries: 5
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  networks:
-    - app-network
+    networks:
+      - app-network
 
   server:
     image: 239155901548.dkr.ecr.ap-south-1.amazonaws.com/backend:${IMAGE_TAG}
