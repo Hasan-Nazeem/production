@@ -48,11 +48,11 @@ pipeline {
         stage('Deploy Application') {
             steps {
                 sh '''
-                    docker compose down
+                    docker compose down --remove-orphans
 
                     docker compose pull
 
-                    IMAGE_TAG=${IMAGE_TAG} docker compose up -d --force-recreate
+                    IMAGE_TAG=${IMAGE_TAG} docker compose up -d --force-recreate --remove-orphans
 
                     docker image prune -f
                 '''
