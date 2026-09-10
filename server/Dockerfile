@@ -1,5 +1,5 @@
 # Use official Node.js 14 as base image
-FROM node:16.20.2-buster-slim
+FROM node:22-bookworm-slim
 
 # Set working directory
 WORKDIR /usr/src/app
