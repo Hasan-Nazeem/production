@@ -2,7 +2,6 @@ services:
   client:
     image: 239155901548.dkr.ecr.ap-south-1.amazonaws.com/frontend:${IMAGE_TAG}
 
-    container_name: client
 
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080 >/dev/null 2>&1 || exit 1"]
@@ -16,7 +15,6 @@ services:
 
   server:
     image: 239155901548.dkr.ecr.ap-south-1.amazonaws.com/backend:${IMAGE_TAG}
-    container_name: server
     env_file:
       - .env
     command: [
@@ -36,7 +34,6 @@ services:
 
   mongo:
     image: mongo:7
-    container_name: mongodb
     command: mongod --quiet --logpath /dev/null
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
@@ -48,7 +45,6 @@ services:
 
   nginx:
     image: nginx:alpine
-    container_name: nginx
     ports:
       - '80:80'
     volumes:
